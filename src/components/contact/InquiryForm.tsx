@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CheckCircle2Icon, Loader2Icon } from 'lucide-react';
+import emailjs from '@emailjs/browser';
+
+const env = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env;
+const EMAILJS_SERVICE_ID = env?.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = env?.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = env?.VITE_EMAILJS_PUBLIC_KEY;
 
 const inquiryTypes = [
 'General Corporate Inquiry',
@@ -8,7 +14,6 @@ const inquiryTypes = [
 'Company Information',
 'Project or Historical Information',
 'Other'];
-
 
 type FormState = {name: string;organization: string;email: string;type: string;message: string;};
 type Errors = Partial<Record<keyof FormState, string>>;
@@ -21,23 +26,52 @@ export function InquiryForm() {
   params.get('type') === 'partnership' ? { ...initial, type: 'Partnership-Related Inquiry' } : initial
   );
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [sendError, setSendError] = useState('');
 
   const update = (key: keyof FormState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setValues((v) => ({ ...v, [key]: e.target.value }));
     if (errors[key]) setErrors((er) => ({ ...er, [key]: undefined }));
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (status === 'sending') return;
     const next: Errors = {};
     if (!values.name.trim()) next.name = 'Please enter your name.';
     if (!/^\S+@\S+\.\S+$/.test(values.email)) next.email = 'Please enter a valid email address.';
     if (values.message.trim().length < 10) next.message = 'Please enter a message of at least 10 characters.';
     setErrors(next);
     if (Object.keys(next).length) return;
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      setSendError('The contact form is not configured yet. Please email us directly.');
+      setStatus('error');
+      return;
+    }
+
+    setSendError('');
     setStatus('sending');
-    window.setTimeout(() => setStatus('sent'), 700);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: values.name.trim(),
+          organization: values.organization.trim() || 'Not provided',
+          from_email: values.email.trim(),
+          reply_to: values.email.trim(),
+          inquiry_type: values.type,
+          message: values.message.trim()
+        },
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
+      setStatus('sent');
+    } catch (err) {
+      console.error('EmailJS error:', err);
+      setSendError('Sorry, your inquiry could not be sent. Please try again or email us directly.');
+      setStatus('error');
+    }
   };
 
   if (status === 'sent') {
@@ -53,6 +87,7 @@ export function InquiryForm() {
           type="button"
           onClick={() => {
             setValues(initial);
+            setSendError('');
             setStatus('idle');
           }}
           className="mt-6 text-sm font-semibold text-brand-700 hover:text-navy-900">
@@ -91,6 +126,11 @@ export function InquiryForm() {
           </Field>
         </div>
       </div>
+      {status === 'error' && sendError &&
+      <p role="alert" className="mt-5 rounded-sm border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
+          {sendError}
+        </p>
+      }
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
         <p className="text-xs text-muted">Fields marked * are required.</p>
         <button

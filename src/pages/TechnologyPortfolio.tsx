@@ -9,7 +9,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 
 export function TechnologyPortfolio() {
   usePageMeta({
-    title: 'Technology Portfolio — Technology Areas and Expertise',
+    title: 'Technology Portfolio - Technology Areas and Expertise',
     description:
     'An overview of the technology domains associated with Cybertec Enterprises: telecommunication, broadcast, enterprise networking and infrastructure technology.',
     path: '/technology-portfolio'

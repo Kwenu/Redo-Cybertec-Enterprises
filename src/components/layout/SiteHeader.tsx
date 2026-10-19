@@ -18,7 +18,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-[72px] max-w-site items-center justify-between gap-6 px-6 lg:px-8">
-        <Link to="/" aria-label="Cybertec Enterprises (Pvt) Ltd — Home" className="shrink-0">
+        <Link to="/" aria-label="Cybertec Enterprises (Pvt) Ltd - Home" className="shrink-0">
           <Logo />
         </Link>
 

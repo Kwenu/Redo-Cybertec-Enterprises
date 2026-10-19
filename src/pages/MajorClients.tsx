@@ -9,7 +9,7 @@ import type { Organization } from '../types/content';
 
 export function MajorClients() {
   usePageMeta({
-    title: 'Major Clients — Organizations Associated With Our Project Experience',
+    title: 'Major Clients - Organizations Associated With Our Project Experience',
     description:
     'Organizations associated with Cybertec Enterprises’ documented project experience across telecommunications, aviation, broadcasting and government.',
     path: '/major-clients'

@@ -7,7 +7,7 @@ import { usePageMeta, organizationSchema } from '../hooks/usePageMeta';
 
 export function Contact() {
   usePageMeta({
-    title: 'Contact — Corporate Inquiries',
+    title: 'Contact - Corporate Inquiries',
     description:
     'Corporate contact information for Cybertec Enterprises (Pvt) Ltd, No 10, St Joseph Place, Mabola, Wattala, Sri Lanka.',
     path: '/contact',

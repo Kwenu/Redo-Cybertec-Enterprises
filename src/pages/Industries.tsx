@@ -10,7 +10,7 @@ import { usePageMeta } from "../hooks/usePageMeta";
 export function Industries() {
   usePageMeta({
     title:
-      "Industries — Telecommunications, Broadcasting & Enterprise Networking",
+      "Industries - Telecommunications, Broadcasting & Enterprise Networking",
     description:
       "The industry sectors in which Cybertec Enterprises has documented experience: telecommunications, broadcasting, enterprise networking, infrastructure and power systems in Sri Lanka.",
     path: "/industries",
@@ -171,7 +171,7 @@ export function Industries() {
                                 to={`/project-experience#${p.id}`}
                                 className="text-brand-700 underline-offset-2 hover:underline"
                               >
-                                {p.title} — {p.organization}
+                                {p.title} - {p.organization}
                               </Link>
                             </li>
                           ))}

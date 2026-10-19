@@ -17,7 +17,7 @@ import { usePageMeta, organizationSchema } from '../hooks/usePageMeta';
 
 export function Home() {
   usePageMeta({
-    title: 'Technology Company Sri Lanka — Global Technology Partnerships',
+    title: 'Technology Company Sri Lanka - Global Technology Partnerships',
     description:
     'Cybertec Enterprises (Pvt) Ltd, established in 2000, is a Sri Lankan technology company with international manufacturer relationships and experience in telecommunications, broadcasting and enterprise networking.',
     path: '/',

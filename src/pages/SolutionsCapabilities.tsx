@@ -13,7 +13,7 @@ const sectors = [
 
 export function SolutionsCapabilities() {
   usePageMeta({
-    title: 'Solutions & Capabilities — Engineering and Technical Capabilities',
+    title: 'Solutions & Capabilities -Engineering and Technical Capabilities',
     description:
     'The technical capabilities of Cybertec Enterprises — system design, installation, commissioning, maintenance and support — that complement its technology-sector experience.',
     path: '/solutions-capabilities'

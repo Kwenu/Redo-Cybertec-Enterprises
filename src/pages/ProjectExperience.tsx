@@ -8,7 +8,7 @@ import type { IndustryId } from '../types/content';
 
 export function ProjectExperience() {
   usePageMeta({
-    title: 'Project Experience — Technology Infrastructure Projects',
+    title: 'Project Experience - Technology Infrastructure Projects',
     description:
     'Selected documented projects of Cybertec Enterprises, including work for Sri Lanka Telecom, Airport & Aviation Services Sri Lanka, Lanka Bell and the Ministry of Finance, Maldives.',
     path: '/project-experience'
